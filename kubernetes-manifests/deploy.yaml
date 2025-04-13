@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flask-app
+  name: flask-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - image: registrytestnetapp.azurecr.io/app-flask:latest
+        name: app-flask
+        volumeMounts:
+        - name: app-vol
+          mountPath: /files/uploads
+        ports:
+        - containerPort: 5000
+      volumes:
+      - name: app-vol
+        persistentVolumeClaim:
+          claimName: pvc-application
