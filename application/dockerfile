@@ -1,0 +1,18 @@
+# Usamos una imagen base de Python
+FROM python:3.9-slim
+
+# Establecemos el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiamos el archivo requirements.txt y lo instalamos
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiamos el resto de los archivos de la aplicación al contenedor
+COPY . .
+
+# Exponemos el puerto 5000 (que usa Flask por defecto)
+EXPOSE 5000
+
+# Comando para ejecutar la aplicación Flask
+CMD ["python", "app.py"]
